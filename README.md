@@ -114,6 +114,9 @@ Manually
 Start a container with the "always" or "unless-stopped" restart policy
 `docker run -d --restart unless-stopped  --name shiori -p 8080:8080`
 
+Change the restart policy of a running container
+`docker update --restart unless-stopped shiori`
+
 ---
 
 
