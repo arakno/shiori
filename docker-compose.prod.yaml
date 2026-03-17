@@ -1,0 +1,26 @@
+# Production Docker Compose for Shiori with data persistence
+# This file is designed to run the Shiori container from Docker Hub
+# with proper volume mapping for bookmark data persistence
+
+version: '3.8'
+
+services:
+  shiori:
+    image: pbasto/shiori:latest
+    container_name: shiori_prod
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    volumes:
+      - "~/shiori/data:/shiori"
+    environment:
+      - SHIORI_DIR=/shiori
+      # Uncomment and modify these if you need database support
+      # - SHIORI_DATABASE_URL=mysql://user:password@(host)/shiori?charset=utf8mb4
+      # - SHIORI_DATABASE_URL=postgres://user:password@host/shiori?sslmode=disable
+
+# Usage instructions:
+# 1. Start the container: docker-compose -f docker-compose.prod.yaml up -d
+# 2. Stop the container: docker-compose -f docker-compose.prod.yaml down
+# 3. Your bookmark data will be persisted in ~/shiori/data on your host machine
+# 4. To update to a new version: docker-compose -f docker-compose.prod.yaml pull && docker-compose -f docker-compose.prod.yaml up -d
